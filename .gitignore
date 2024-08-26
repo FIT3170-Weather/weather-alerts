@@ -6,3 +6,6 @@
 
 # Ignore .env file
 .env
+
+# Ignore the weather alert cache
+cache.json
