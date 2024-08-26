@@ -1,65 +1,40 @@
-import os
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import time
 
-from dotenv import load_dotenv
-
-
-def send_email(subject: str, body: str, to_email: str, from_email: str, password: str, smtp_server: str, smtp_port: int) -> None:
-    """
-    Send an email with the given subject and body to the specified recipient.
-
-    :param subject: The subject of the email.
-    :param body: The body of the email.
-    :param to_email: The recipient's email address.
-    :param from_email: The sender's email address.
-    :param password: The password for the sender's email account.
-    :param smtp_server: The SMTP server address.
-    :param smtp_port: The port to use for the SMTP server.
-    """
-
-    # Create the email headers and body
-    message = MIMEMultipart()
-    message['From'] = from_email
-    message['To'] = to_email
-    message['Subject'] = subject
-
-    # Attach the body text
-    message.attach(MIMEText(body, 'plain'))
-
-    # Connect to the SMTP server and send the email
-    try:
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()  # Secure the connection
-            server.login(from_email, password)  # Login to the server
-            server.sendmail(from_email, to_email, message.as_string())  # Send the email
-            print(f"Email sent to {to_email}")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
+from api_client import fetch_weather_warnings, fetch_subscribed_users
+from cache_manager import load_cache, save_cache
+from config import CHECK_INTERVAL
+from email_sender import send_email
+from utils import warning_is_new, get_state_name
 
 
 def main() -> None:
     """
-    Main function to load environment variables and send a 'Hello, World!' email.
+    Main function to periodically check weather warnings and notify users.
     """
+    while True:
+        print("Checking for new weather warnings...")
+        warnings = fetch_weather_warnings()
+        cache = load_cache()
 
-    # Load environment variables from .env file
-    load_dotenv()
+        new_warnings = [w for w in warnings if warning_is_new(w, cache)]
 
-    # Gather email credentials and recipient information from environment variables
-    from_email: str = os.getenv('EMAIL_USER', '')
-    password: str = os.getenv('EMAIL_PASS', '')
-    smtp_server: str = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-    smtp_port: int = int(os.getenv('EMAIL_PORT', 587))
-    to_email: str = 'sdat0004@student.monash.edu'
+        if new_warnings:
+            print(f"Found {len(new_warnings)} new warnings.")
+            subscribed_users = fetch_subscribed_users().get('data', [])
+            for warning in new_warnings:
+                for email, cities in subscribed_users:
+                    if any(get_state_name(city.lower()).lower() in warning['text_en'].lower() for city in cities):
+                        send_email(
+                            to_email=email,
+                            subject=f"CliMate Warning: {warning['heading_en']}",
+                            body=warning['text_en']
+                        )
+            save_cache(warnings)
+        else:
+            print("No new warnings.")
 
-    # Define the subject and body of the email
-    subject: str = "Hello, World!"
-    body: str = "Hello, World!"
-
-    # Send the email
-    send_email(subject, body, to_email, from_email, password, smtp_server, smtp_port)
+        print(f"Sleeping for {CHECK_INTERVAL} seconds...")
+        time.sleep(CHECK_INTERVAL)
 
 
 if __name__ == "__main__":
