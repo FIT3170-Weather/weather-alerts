@@ -23,7 +23,7 @@ def main() -> None:
             subscribed_users = fetch_subscribed_users().get('data', [])
             for warning in new_warnings:
                 for email, cities in subscribed_users:
-                    if any(get_state_name(city.lower()).lower() in warning['text_en'].lower() for city in cities):
+                    if any(get_state_name(city.lower()) in warning['text_en'].lower() for city in cities):
                         send_email(
                             to_email=email,
                             subject=f"CliMate Warning: {warning['heading_en']}",
