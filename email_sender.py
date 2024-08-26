@@ -22,3 +22,4 @@ def send_email(to_email: str, subject: str, body: str) -> None:
         server.starttls()
         server.login(EMAIL_USER, EMAIL_PASS)
         server.sendmail(EMAIL_USER, to_email, message.as_string())
+        print(f"Email sent to {to_email}.")
