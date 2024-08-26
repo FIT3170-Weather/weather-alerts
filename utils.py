@@ -11,3 +11,21 @@ def warning_is_new(warning: dict[str, str | None | dict[str, str | None]],
         if warning["warning_issue"]["issued"] == cached_warning["warning_issue"]["issued"]:
             return False
     return True
+
+
+def get_state_name(city: str) -> str | None:
+    """
+    Get the state name based on the city name.
+
+    :param city: The city name.
+    :return: The state name.
+    """
+    states = {
+        "johor-bahru": "Johor",
+        "kuala-lumpur": "Kuala Lumpur",
+        "ipoh": "Perak",
+        "subang-jaya": "Selangor",
+        "petaling-jaya": "Selangor",
+        "george-town": "Penang",  # TODO: remove this line
+    }
+    return states.get(city)
