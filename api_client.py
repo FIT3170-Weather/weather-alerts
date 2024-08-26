@@ -3,7 +3,7 @@ import requests
 from config import WEATHER_API_URL, SUBSCRIPTIONS_API_URL
 
 
-def fetch_weather_warnings(limit: int = 1) -> list[dict[str, str | None | dict[str, str | None]]]:
+def fetch_weather_warnings(limit: int = 10) -> list[dict[str, str | None | dict[str, str | None]]]:
     """
     Fetch weather warnings from the weather API.
 
