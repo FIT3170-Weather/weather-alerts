@@ -3,6 +3,7 @@
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Software Requirements](#software-requirements)
+3. [Hardware Requirements](#hardware-requirements)
 3. [Setup and Installation Instructions](#setup-and-installation-instructions)
 4. [How to Run the Project](#how-to-run-the-project)
 5. [Common Issues and Troubleshooting](#common-issues-and-troubleshooting)
@@ -13,7 +14,7 @@
 - Provides alerts for weather 'warnings' for locations that have been selected by the user.
 - Decoupled from the main CliMate application.
 - Alerts are sent via email.
-- Uses https://developer.data.gov.my/realtime-api/weather#warning-forecast to get the weather warnings.
+- Uses [Malaysia's official open data portal](https://developer.data.gov.my/realtime-api/weather#warning-forecast) to get the weather warnings.
 - Uses the main CliMate application's database to get the user's selected locations and email addresses.
 - Warning forecasts are checked every 5 minutes.
 - If a new warning is found, an email is sent to the user.
@@ -26,6 +27,8 @@
 - Python 3.12.5
 - pip
 
+## Hardware Requirements
+- A computer with an internet connection
 
 ## Setup and Installation Instructions
 - Clone the repository
@@ -33,7 +36,11 @@
 - Fill in the .env file with your email and app password
 
 ## How to Run the Project
-- Run the script using the following command: `python main.py` or `python3 main.py` (depending on your system)
+- Make sure that the FastAPI server that's hosted in the [forecast-api repository](https://github.com/FIT3170-Weather/forecast-api?tab=readme-ov-file#hardware-requirements) is running
+  - Verify that http://127.0.0.1:8000/profiles/subscriptions/ is accessible
+  - Verify that it returns a JSON response
+- Navigate to the project root directory
+- Run the script using the following command: `python main.py`, `python3 main.py`, `py -m main`, etc... (depending on your system)
 
 
 ## Common Issues and Troubleshooting
@@ -60,7 +67,7 @@ be provided.
 ## Contact Information
 
 | Name                         | Email                       | Student ID |
-|------------------------------| --------------------------- | ---------- |
+|------------------------------|-----------------------------|------------|
 | **Suman Datta** (maintainer) | sdat0004@student.monash.edu | 30668786   |
 | Daryl Lim                    | dlim0036@student.monash.edu | 33560757   |
 | Ryan Choo Yan Jhie           | rcho0046@student.monash.edu | 33455775   |
