@@ -60,6 +60,17 @@
 1. Ensure you have installed the required packages using the following command: `pip install -r requirements.txt`
 2. Ensure you have filled in the .env file with your email and password
 
+### Issue 4: The FastAPI server is not running
+1. Ensure that the FastAPI server that's hosted in the [forecast-api repository](https://github.com/FIT3170-Weather/forecast-api?tab=readme-ov-file#hardware-requirements) is running
+2. Verify that http://127.0.0.1:8000/profiles/subscriptions/ is accessible
+3. Verify that it returns a JSON response
+4. Ensure that the server is not being blocked by a firewall
+5. Ensure that the server is not being blocked by an antivirus
+
+### Issue 5: The script is not running
+1. Ensure you have installed the required packages using the following command: `pip install -r requirements.txt`
+2. Ensure you have filled in the .env file with your email and password
+
 ## Additional Notes
 The API being used to obtain the weather alerts is quite poorly documented. Thus, no further granularity in alerts can 
 be provided.

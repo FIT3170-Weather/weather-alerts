@@ -26,7 +26,7 @@ def main() -> None:
                     if any(get_state_name(city.lower()) in warning['text_en'].lower() for city in cities):
                         send_email(
                             to_email=email,
-                            subject=f"CliMate Warning: {warning['heading_en']}",
+                            subject=f"Cli•Mate: {warning['heading_en']}",
                             body=warning['text_en']
                         )
             save_cache(warnings)
