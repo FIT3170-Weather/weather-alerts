@@ -9,10 +9,8 @@ WEATHER_API_URL = "https://api.data.gov.my/weather/warning"
 SUBSCRIPTIONS_API_URL = "http://127.0.0.1:8000/profiles/subscriptions"
 
 # Email configuration
-EMAIL_USER = os.getenv('EMAIL_USER')
-EMAIL_PASS = os.getenv('EMAIL_PASS')
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+SEND_GRID_API_CLIENT = os.getenv('SEND_GRID_API_CLIENT')
+FROM_EMAIL = os.getenv('FROM_EMAIL')
 
 # Other configuration
 CACHE_FILE = "cache.json"
