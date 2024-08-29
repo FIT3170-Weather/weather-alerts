@@ -20,7 +20,7 @@
 - If a new warning is found, an email is sent to the user.
 - The email contains the warning message and the location of the warning.
 - Emails are sent via SendGrid
-- A template .env file is provided for the user to fill in their email and password.
+- A template .env file is provided for the user to fill in their SendGrid verified single sender email and API key.
 
 ## Software Requirements
 
@@ -45,7 +45,7 @@
 
 ## Common Issues and Troubleshooting
 
-### Issue 1: App password not working
+### Issue 1: 4xx error when sending an email
 1. Ensure you have no spaces in your SendGrid verified single sender email and API key in the .env file
 2. Verify that the single sender email is verified in SendGrid and associated with the API key
 
